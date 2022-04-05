@@ -4,8 +4,9 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.0.0"
 }
 
-group 'com.github.kornilova203'
-version '1.14'
+group 'com.github.spencerswagger'
+def artifactId = 'mongo-jdbc-driver'
+version '1.14.0'
 
 repositories {
     mavenCentral()
@@ -28,6 +29,15 @@ test {
 }
 
 shadowJar {
-    archiveFileName = "mongo-jdbc-standalone-${version}.jar"
+    archiveFileName = "mongo-jdbc-standalone-${project.version}.jar"
     mergeServiceFiles()
+}
+publishing {
+    publications {
+        shadow(MavenPublication) {
+            artifact shadowJar {
+                classifier 'standalone'
+            }
+        }
+    }
 }
